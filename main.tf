@@ -20,7 +20,7 @@ resource "aws_eip" "tfElasticIp" {
   vpc = true
   instance = "${element(aws_instance.TerraformEC2Instance.*.id,count.index)}"
 
-  tags{
+  tags = {
       Name = "eip-Terraform-$(count.index + 1)"
   }
 }
@@ -126,8 +126,8 @@ resource "aws_lb_listener" "terraform_lb_listener" {
 
 
 resource "aws_lb_target_group_attachment" "ec2_attach" {
-  count            = length(aws_instance.base)  
+  count            = length(aws_instance.TerraformEC2Instance)  
   target_group_arn = aws_lb_target_group.terraform-lb-target.arn
-  target_id        = aws_instance.base[count.index].id
+  target_id        = aws_instance.TerraformEC2Instance[count.index].id
   
 }
