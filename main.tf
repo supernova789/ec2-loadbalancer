@@ -21,7 +21,7 @@ resource "aws_eip" "tfElasticIp" {
   instance = "${element(aws_instance.TerraformEC2Instance.*.id,count.index)}"
 
   tags = {
-      Name = "eip-Terraform-$(count.index + 1)"
+      Name = "eip-Terraform-${count.index + 1}"
   }
 }
 
@@ -75,10 +75,6 @@ resource "aws_security_group" "allow_ports" {
 
 data "aws_subnet_ids" "subnet" {
   vpc_id = "${aws_default_vpc.default.id}"
-   
-   tags = {
-    Name = "Terraform Subnet"
-  }
 }
 
 resource "aws_lb_target_group" "terraform-lb-target" {
